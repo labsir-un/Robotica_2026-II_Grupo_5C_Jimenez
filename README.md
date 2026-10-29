@@ -11,9 +11,8 @@
 
 <h2>Profesores: <br>Pedro Fabián Cárdenas Herrera <br> Manuel Felipe Carranza Montenegro</h2>
 
-<h4>Nombre Integrante 1<br>
-    Nombre Integrante 2<br>
-    Nombre Integrante 3</h4>
+<h4>Alejandro Jiménez Zabala<br>
+    Nombre Integrante 2</h4>
 
 <p>
   <img alt="Ubuntu 24.04 LTS" src="https://img.shields.io/badge/Ubuntu-24.04%20LTS-E95420?logo=ubuntu&logoColor=white">
@@ -36,7 +35,7 @@
 
 ## Descripción
 
-Este repositorio corresponde al desarrollo de las actividades del curso de **Robótica 2026-I**.  
+Este repositorio corresponde al desarrollo de las actividades del curso de **Robótica 2026-I - Grupo 5C**.  
 Aquí se documentan los laboratorios, avances, resultados y la presentación de los integrantes del equipo.
 
 ---
@@ -57,14 +56,14 @@ Aquí se documentan los laboratorios, avances, resultados y la presentación de 
   <img src="./assets/integrantes/integrante1.jpg" alt="Foto integrante 1" style="border-radius: 50%; width: 180px;"><br>
 </div>
 
-- **Nombre completo:** Nombre Apellido
+- **Nombre completo:** Alejandro Jiménez Zabala
 - **Carrera:** Ingeniería Mecatrónica
-- **Correo institucional:** nombre@unal.edu.co
-- **Usuario de GitHub:** [usuariogithub](https://github.com/usuariogithub)
+- **Correo institucional:** ajimenezz@unal.edu.co
+- **Usuario de GitHub:** [alejojimenezz](https://github.com/alejojimenezz)
 - **Rol en el equipo:** Ej. Integración ROS 2, documentación, simulación
 - **Intereses:** Robótica móvil, visión artificial, automatización
 - **Descripción breve:**  
-  Escribe aquí una breve presentación personal y académica del integrante.
+  Estudiante de Ingeniería Mecatrónica, curioso, y siempre buscando aprender un poco más.
 
 ---
 
@@ -81,20 +80,3 @@ Aquí se documentan los laboratorios, avances, resultados y la presentación de 
 - **Intereses:** Manipulación, ROS 2, control de robots
 - **Descripción breve:**  
   Escribe aquí una breve presentación personal y académica del integrante.
-
----
-
-### Integrante 3
-<div align="center">
-  <img src="./assets/integrantes/integrante3.jpg" alt="Foto integrante 3" style="border-radius: 50%; width: 180px;"><br>
-</div>
-
-- **Nombre completo:** Nombre Apellido
-- **Carrera:** Ingeniería Mecatrónica
-- **Correo institucional:** nombre@unal.edu.co
-- **Usuario de GitHub:** [usuariogithub](https://github.com/usuariogithub)
-- **Rol en el equipo:** Ej. Documentación, pruebas, simulación
-- **Intereses:** Robótica industrial, sistemas autónomos, IA
-- **Descripción breve:**  
-  Escribe aquí una breve presentación personal y académica del integrante.
-
