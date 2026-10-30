@@ -12,6 +12,9 @@
     - [Decoración de pastel](#decoración-de-pastel)
     - [Flujo completo](#flujo-completo)
   - [RAPID](#rapid)
+  - [Resultado](#resultado)
+    - [Decoración](#decoración)
+    - [Video](#video)
 
 
 ## Descripción de problema y solución
@@ -24,9 +27,13 @@ A partir de éste punto se decidió el "pastel" que se usaría para el desarroll
 
 ## Diseño de herramienta
 
+<!-- TODO: Pantallazos de Inventor -->
+
 ## Calibración
 
 ### Virtual
+
+<!-- TODO: Agregar imagen de TCP en RobotStudio -->
 
 ### Física
 
@@ -50,6 +57,8 @@ ENDMODULE
 
 ## Plano de planta
 
+<!-- TODO: Descripción de medidas para planta en RobotStudio -->
+
 ## Diagramas de flujo
 
 ### Pose de mantenimiento
@@ -65,3 +74,17 @@ ENDMODULE
 [Diagrama de flujo de rutina completa](./flowCharts/flujoResumen.md)
 
 ## RAPID
+
+<!-- TODO: Explicación de RAPID y funciones -->
+
+## Resultado
+
+### Decoración
+
+<!-- TODO: Agregar imagen de tablero -->
+
+### [Video](https://youtu.be/dHdbAhTnvL0)
+
+```
+https://youtu.be/dHdbAhTnvL0
+```
