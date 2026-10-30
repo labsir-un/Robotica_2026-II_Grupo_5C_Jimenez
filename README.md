@@ -60,8 +60,8 @@ Aquí se documentan los laboratorios, avances, resultados y la presentación de 
 - **Carrera:** Ingeniería Mecatrónica
 - **Correo institucional:** ajimenezz@unal.edu.co
 - **Usuario de GitHub:** [alejojimenezz](https://github.com/alejojimenezz)
-- **Rol en el equipo:** Ej. Integración ROS 2, documentación, simulación
-- **Intereses:** Robótica móvil, visión artificial, automatización
+- **Rol en el equipo:** Organización, documentación, simulación, implementación
+- **Intereses:** Desarrollo de software, Inteligencia Artificial, Automatización
 - **Descripción breve:**  
   Estudiante de Ingeniería Mecatrónica, curioso, y siempre buscando aprender un poco más.
 
