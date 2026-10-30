@@ -2,16 +2,26 @@
 
 - [Informe de Laboratorio 01](#informe-de-laboratorio-01)
   - [Descripción de problema y solución](#descripción-de-problema-y-solución)
-  - [Diseño de herramienta](#diseño-de-herramienta)
+  - [Diseños](#diseños)
+    - [Herramienta](#herramienta)
+    - [Work Object ("Pastel")](#work-object-pastel)
   - [Calibración](#calibración)
     - [Virtual](#virtual)
     - [Física](#física)
+    - [Selección](#selección)
   - [Plano de planta](#plano-de-planta)
   - [Diagramas de flujo](#diagramas-de-flujo)
     - [Pose de mantenimiento](#pose-de-mantenimiento)
     - [Decoración de pastel](#decoración-de-pastel)
     - [Flujo completo](#flujo-completo)
   - [RAPID](#rapid)
+    - [1. Declaración de Datos y Configuración Espacial](#1-declaración-de-datos-y-configuración-espacial)
+    - [2. Estructura y Lógica del Bucle Principal (`main`)](#2-estructura-y-lógica-del-bucle-principal-main)
+    - [3. Análisis Detallado de Rutinas y Toma de Decisiones](#3-análisis-detallado-de-rutinas-y-toma-de-decisiones)
+      - [3.1. Rutina de Mantenimiento (`DI_01 = 1`)](#31-rutina-de-mantenimiento-di_01--1)
+      - [3.2. Rutina Auxiliar / Farmeo de Aura (`DI_02 = 1`)](#32-rutina-auxiliar--farmeo-de-aura-di_02--1)
+      - [3.3. Ciclo de Decoración de Pasteles (`DI_03 = 1`)](#33-ciclo-de-decoración-de-pasteles-di_03--1)
+    - [4. Funciones e Instrucciones RAPID Utilizadas](#4-funciones-e-instrucciones-rapid-utilizadas)
   - [Resultado](#resultado)
     - [Decoración](#decoración)
     - [Video](#video)
@@ -25,15 +35,23 @@ Con lo anterior se inicia el desarrollo de la solución con un [modelado CAD](#d
 
 A partir de éste punto se decidió el "pastel" que se usaría para el desarrollo del resto del laboratorio, junto con una [toma de medidas](#plano-de-planta) para tomar las distancias del robot ABB IRB140 Caín, a su respectiva banda transportadora. Con todo esto se puede proceder a hacer uso del RobotStudio para el desarrollo de las rutinas.
 
-## Diseño de herramienta
+## Diseños
 
-<!-- TODO: Pantallazos de Inventor -->
+### Herramienta
+
+![modeloHerramienta](../assets/lab01/modeloTool.png)
+
+### Work Object ("Pastel")
+
+![modeloPastel](../assets/lab01/modeloWorkObject.png)
 
 ## Calibración
 
 ### Virtual
 
-<!-- TODO: Agregar imagen de TCP en RobotStudio -->
+Con comandos proveidos por RobotStudio agregamos un TCP a la herramienta en la punta del marcador, y teniendo en cuenta la inclinación de la herramienta de $30^\circ$ con respecto a la normal de la base de la herramienta, para una calibración confiable desde el mismo software usado.
+
+![marcadorTCP](../assets/lab01/marcadorTCP.png)
 
 ### Física
 
@@ -55,9 +73,21 @@ MODULE Module5C
 ENDMODULE
 ```
 
+### Selección
+
+Nos inclinamos por usar la calibración virtual, para asegurar la mayor consistencia de las rutinas al pasar de la simulación a la realidad; además de evitar el error que nos generaba la calibración física, la cual era de alrededor de $~5\;mm$.
+
 ## Plano de planta
 
-<!-- TODO: Descripción de medidas para planta en RobotStudio -->
+En el software RobotStudio generamos la planta completa para simulación apoyandonos de las herramientas de modelado que permite usar el software, iniciando con la ubicación del robot y de la herramienta en el espacio de trabajo.
+
+![Planta general](../assets/lab01/plantaGeneral.png)
+
+Al usar a Caín para la práctica, procedimos a tomar las medidas para tener una mejor idea del posicionamiento de la banda co respecto al robot, lo que de igual manera nos permitiría simular los movimientos de la banda haciendo uso de los Smart Components de RobotStudio.
+
+![Medidas planta](../assets/lab01/plantaMedidas.png)
+
+Nos vimos en la necesidad de hacer unos ajustes a las medidas, es decir, las mostradas en la imágen anterior no corresponden al robot real, ya que compensamos un cambio hecho al "pastel", ya que la base que teniamos lo hacia muy inestable para los movimientos rapidos tanto de la banda como del robot, por lo que al momento de hacer la práctica con el robot físico usamos solo el tablero sobre la banda.
 
 ## Diagramas de flujo
 
@@ -79,7 +109,7 @@ En esta sección se analiza y justifica la estructura, sintaxis y lógica del pr
 
 ---
 
-## 1. Declaración de Datos y Configuración Espacial
+### 1. Declaración de Datos y Configuración Espacial
 
 El módulo `Module1` inicia definiendo los datos cinemáticos y de posición necesarios para que el controlador ejecute las trayectorias de forma precisa:
 
@@ -94,7 +124,7 @@ El módulo `Module1` inicia definiendo los datos cinemáticos y de posición nec
 
 ---
 
-## 2. Estructura y Lógica del Bucle Principal (`main`)
+### 2. Estructura y Lógica del Bucle Principal (`main`)
 
 El procedimiento principal `main()` gestiona el ciclo de vida del programa y la respuesta a eventos de la celda:
 
@@ -121,11 +151,11 @@ ENDPROC
 
 ---
 
-## 3. Análisis Detallado de Rutinas y Toma de Decisiones
+### 3. Análisis Detallado de Rutinas y Toma de Decisiones
 
 La lógica del programa utiliza estructuras condicionales `IF ... THEN` para seleccionar la rutina a ejecutar según las entradas digitales (`DI_01`, `DI_02`, `DI_03`):
 
-### 3.1. Rutina de Mantenimiento (`DI_01 = 1`)
+#### 3.1. Rutina de Mantenimiento (`DI_01 = 1`)
 
 ```rapid
 IF DI_01 = 1 THEN
@@ -147,7 +177,7 @@ ENDIF
   3. **Retención Pasiva en Mantenimiento:** El bucle `WHILE DI_01 = 0 DO WaitTime(5); ENDWHILE` mantiene al manipulador en la pose de servicio realizando pausas periódicas de 5 segundos hasta que se modifique el estado de la entrada.
   4. **Retorno Seguro:** Al concluir la condición, el robot regresa a `Path_home` y apaga la señal `DO_01`, dejando la celda lista para producción.
 
-### 3.2. Rutina Auxiliar / Farmeo de Aura (`DI_02 = 1`)
+#### 3.2. Rutina Auxiliar / Farmeo de Aura (`DI_02 = 1`)
 
 ```rapid
 IF DI_02 = 1 THEN
@@ -163,7 +193,7 @@ ENDIF
   2. **Verificación Articular (`Path_10`):** Ejecuta una secuencia de movimientos articulares pasando por `Target_home`, `Target_30`, `Target_40`, alternando repetidamente entre los puntos `Target_10`, `Target_20`, `Target_50`, `Target_60`, y finalizando en `Target_70`.
   3. **Justificación:** Permite realizar pruebas de dinámica, diagnóstico de ejes y verificación de repetibilidad en una zona libre de la celda sin activar la banda ni interferir con el área de trabajo del pastel.
 
-### 3.3. Ciclo de Decoración de Pasteles (`DI_03 = 1`)
+#### 3.3. Ciclo de Decoración de Pasteles (`DI_03 = 1`)
 
 ```rapid
 IF DI_03 = 1 THEN
@@ -189,26 +219,26 @@ ENDIF
 
 ---
 
-## 4. Funciones e Instrucciones RAPID Utilizadas
+### 4. Funciones e Instrucciones RAPID Utilizadas
 
 A continuación se resume el catálogo de instrucciones y tipos de datos RAPID empleados en el programa, justificando su selección técnica:
 
-| Instrucción / Tipo de Dato | Uso en el Código | Justificación Técnica |
-| :--- | :--- | :--- |
-| **`MoveJ`** *(Joint Motion)* | `MoveJ Target_home, v100, z1, toolMarcador\WObj:=wobj0;` | Realiza movimientos articulares coordinados no lineales. Se utiliza para aproximaciones rápidas en el aire, previniendo singularidades cinemáticas y minimizando el tiempo de ciclo. |
-| **`MoveL`** *(Linear Motion)* | `MoveL Target_T_20, v100, z1, toolMarcador\WObj:=Workobject_1;` | Mantiene el TCP en una trayectoria estrictamente lineal a velocidad constante. Se aplica en todos los trazos sobre el pastel para asegurar líneas rectas y curvas homogéneas. |
-| **`v100`** *(speeddata)* | Parámetro de velocidad en instrucciones `MoveJ` y `MoveL`. | Establece una velocidad TCP de $100\text{ mm/s}$, idónea para mantener la precisión del trazo del marcador sin dañar la superficie del pastel. |
-| **`z1`** *(zonedata)* | Parámetro de zona de precisión en trayectorias. | Define un radio de redondeo de $1\text{ mm}$ en los puntos intermedios. Evita detenciones exactas bruscas (`fine`) entre vértices de letras, logrando un trazado continuo y fluido. |
-| **`Set` / `Reset`** | `Set DO_01;`, `Reset FWD_Conveyor;` | Controlan salidas digitales discreta de la controladora IRC5 para activar o desactivar elementos de señalización y relés del motor de la banda. |
-| **`WaitTime`** | `WaitTime 3;`, `WaitTime(5);` | Introduce retardo en segundos en la ejecución de la tarea robótica. Permite la sincronización temporal con la física del proceso (estabilización de la banda). |
-| **`PROC ... ENDPROC`** | `PROC Path_T() ... ENDPROC` | Define subrutinas modularizadas para organizar el código en bloques reutilizables y legibles. |
-| **`WHILE ... DO`** | `WHILE TRUE DO`, `WHILE DI_01 = 0 DO` | Controla estructuras iterativas infinitas o supeditadas a estados de señales digitales. |
+| Instrucción / Tipo de Dato    | Uso en el Código                                                | Justificación Técnica                                                                                                                                                                |
+| :---------------------------- | :-------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`MoveJ`** *(Joint Motion)*  | `MoveJ Target_home, v100, z1, toolMarcador\WObj:=wobj0;`        | Realiza movimientos articulares coordinados no lineales. Se utiliza para aproximaciones rápidas en el aire, previniendo singularidades cinemáticas y minimizando el tiempo de ciclo. |
+| **`MoveL`** *(Linear Motion)* | `MoveL Target_T_20, v100, z1, toolMarcador\WObj:=Workobject_1;` | Mantiene el TCP en una trayectoria estrictamente lineal a velocidad constante. Se aplica en todos los trazos sobre el pastel para asegurar líneas rectas y curvas homogéneas.        |
+| **`v100`** *(speeddata)*      | Parámetro de velocidad en instrucciones `MoveJ` y `MoveL`.      | Establece una velocidad TCP de $100\text{ mm/s}$, idónea para mantener la precisión del trazo del marcador sin dañar la superficie del pastel.                                       |
+| **`z1`** *(zonedata)*         | Parámetro de zona de precisión en trayectorias.                 | Define un radio de redondeo de $1\text{ mm}$ en los puntos intermedios. Evita detenciones exactas bruscas (`fine`) entre vértices de letras, logrando un trazado continuo y fluido.  |
+| **`Set` / `Reset`**           | `Set DO_01;`, `Reset FWD_Conveyor;`                             | Controlan salidas digitales discreta de la controladora IRC5 para activar o desactivar elementos de señalización y relés del motor de la banda.                                      |
+| **`WaitTime`**                | `WaitTime 3;`, `WaitTime(5);`                                   | Introduce retardo en segundos en la ejecución de la tarea robótica. Permite la sincronización temporal con la física del proceso (estabilización de la banda).                       |
+| **`PROC ... ENDPROC`**        | `PROC Path_T() ... ENDPROC`                                     | Define subrutinas modularizadas para organizar el código en bloques reutilizables y legibles.                                                                                        |
+| **`WHILE ... DO`**            | `WHILE TRUE DO`, `WHILE DI_01 = 0 DO`                           | Controla estructuras iterativas infinitas o supeditadas a estados de señales digitales.                                                                                              |
 
 ## Resultado
 
 ### Decoración
 
-<!-- TODO: Agregar imagen de tablero -->
+![resultadoTablero](../assets/lab01/resultado.jpeg)
 
 ### [Video](https://youtu.be/dHdbAhTnvL0)
 
